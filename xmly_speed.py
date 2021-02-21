@@ -1034,7 +1034,7 @@ def telegram_bot(title, content):
     send_data = {"chat_id": push_plus_user, "text": title +
                  '\n\n'+content, "disable_web_page_preview": "true"}
     response = requests.post(
-        url='https://api.telegram.org/bot%s/sendMessage' % (push_plus_token), data=send_data)
+        url='http://pushplus.hxtrip.com/send' % (push_plus_token), data=send_data)
     print(response.text)
 
 
