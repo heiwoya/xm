@@ -23,8 +23,8 @@ cookiesList = [cookies1, ]   # 多账号准备
 # 通知服务
 BARK = ''                   # bark服务,自行搜索; secrets可填;形如jfjqxDx3xxxxxxxxSaK的字符串
 SCKEY = ''                  # Server酱的SCKEY; secrets可填
-TG_BOT_TOKEN = ''           # telegram bot token 自行申请
-TG_USER_ID = ''             # telegram 用户ID
+PUSH_PLUS_TOKEN = ''           # push 自行申请
+PUSH_PLUS_USER = ''             # push 用户ID
 
 ###################################################
 # 对应方案1:  GitHub action自动运行,此处无需填写;
@@ -46,10 +46,10 @@ if "XMLY_SPEED_COOKIE" in os.environ:
     if "SCKEY" in os.environ and os.environ["SCKEY"]:
         BARK = os.environ["SCKEY"]
         print("serverJ 推送打开")
-    if "TG_BOT_TOKEN" in os.environ and os.environ["TG_BOT_TOKEN"] and "TG_USER_ID" in os.environ and os.environ["TG_USER_ID"]:
-        TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
-        TG_USER_ID = os.environ["TG_USER_ID"]
-        print("Telegram 推送打开")
+    if "PUSH_PLUS_TOKEN" in os.environ and os.environ["PUSH_PLUS_TOKEN"] and "PUSH_PLUS_USER" in os.environ and os.environ["PUSH_PLUS_USER"]:
+        PUSH_PLUS_TOKEN = os.environ["PUSH_PLUS_TOKEN"]
+        PUSH_PLUS_USER = os.environ["PUSH_PLUS_USER"]
+        print("PUSH 推送打开")
 
 
 ###################################################
@@ -1022,19 +1022,19 @@ def bark(title, content):
 
 def telegram_bot(title, content):
     print("\n")
-    tg_bot_token = TG_BOT_TOKEN
-    tg_user_id = TG_USER_ID
-    if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
-        tg_bot_token = os.environ["TG_BOT_TOKEN"]
-        tg_user_id = os.environ["TG_USER_ID"]
-    if not tg_bot_token or not tg_user_id:
-        print("Telegram推送的tg_bot_token或者tg_user_id未设置!!\n取消推送")
+    push_plus_token = PUSH_PLUS_TOKEN
+    push_plus_user = PUSH_PLUS_USER
+    if "PUSH_PLUS_TOKEN" in os.environ and "PUSH_PLUS_USER" in os.environ:
+        push_plus_token = os.environ["PUSH_PLUS_TOKEN"]
+        push_plus_user = os.environ["PUSH_PLUS_USER"]
+    if not push_plus_token or not push_plus_user:
+        print("push推送的push_plus_token或者push_plus_user未设置!!\n取消推送")
         return
-    print("Telegram 推送开始")
-    send_data = {"chat_id": tg_user_id, "text": title +
+    print("push 推送开始")
+    send_data = {"chat_id": push_plus_user, "text": title +
                  '\n\n'+content, "disable_web_page_preview": "true"}
     response = requests.post(
-        url='https://api.telegram.org/bot%s/sendMessage' % (tg_bot_token), data=send_data)
+        url='https://api.telegram.org/bot%s/sendMessage' % (push_plus_token), data=send_data)
     print(response.text)
 
 
