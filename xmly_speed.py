@@ -23,8 +23,9 @@ cookiesList = [cookies1, ]   # 多账号准备
 # 通知服务
 BARK = ''                   # bark服务,自行搜索; secrets可填;形如jfjqxDx3xxxxxxxxSaK的字符串
 SCKEY = ''                  # Server酱的SCKEY; secrets可填
-PUSH_PLUS_TOKEN = ''           # push 自行申请
-PUSH_PLUS_USER = ''             # push 用户ID
+TG_BOT_TOKEN = ''           # telegram bot token 自行申请
+TG_USER_ID = ''             # telegram 用户ID
+PUSH_PLUS_TOKEN = ''        # PUSH_PLUS 用户TOKEN
 
 ###################################################
 # 对应方案1:  GitHub action自动运行,此处无需填写;
@@ -44,19 +45,21 @@ if "XMLY_SPEED_COOKIE" in os.environ:
         BARK = os.environ["BARK"]
         print("BARK 推送打开")
     if "SCKEY" in os.environ and os.environ["SCKEY"]:
-        BARK = os.environ["SCKEY"]
+        SCKEY = os.environ["SCKEY"]
         print("serverJ 推送打开")
-    if "PUSH_PLUS_TOKEN" in os.environ and os.environ["PUSH_PLUS_TOKEN"] and "PUSH_PLUS_USER" in os.environ and os.environ["PUSH_PLUS_USER"]:
+    if "TG_BOT_TOKEN" in os.environ and os.environ["TG_BOT_TOKEN"] and "TG_USER_ID" in os.environ and os.environ["TG_USER_ID"]:
+        TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
+        TG_USER_ID = os.environ["TG_USER_ID"]
+        print("Telegram 推送打开")
+    if "PUSH_PLUS_TOKEN" in os.environ and os.environ["PUSH_PLUS_TOKEN"]:
         PUSH_PLUS_TOKEN = os.environ["PUSH_PLUS_TOKEN"]
-        PUSH_PLUS_USER = os.environ["PUSH_PLUS_USER"]
-        print("PUSH 推送打开")
-
+        print("push+ 推送打开")
 
 ###################################################
 # 可选项
 # 自定义设备命名,非必须 ;devices=["iPhone7P","huawei"];与cookiesList对应
 devices = []
-notify_time = 20                            # 通知时间,24小时制,默认19
+notify_time = 19                            # 通知时间,24小时制,默认19
 XMLY_ACCUMULATE_TIME = 1                    # 希望刷时长的,此处置1,默认打开;关闭置0
 UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/1.0.12 kdtunion_iting/1.0 iting(main)/1.0.12/ios_1"
 # 非iOS设备的需要的自行修改,自己抓包 与cookie形式类似
@@ -1005,6 +1008,41 @@ def serverJ(title, content):
     response = requests.post(f"https://sc.ftqq.com/{sckey}.send", data=data)
     print(response.text)
 
+def push_plus_token(title, content):
+    print("\n")
+    token = PUSH_PLUS_TOKEN
+    if "PUSH_PLUS_TOKEN" in os.environ:
+        """
+        判断是否运行自GitHub action,"PUSH_PLUS_TOKEN" 该参数与 repo里的Secrets的名称保持一致
+        """
+        token = os.environ["PUSH_PLUS_TOKEN"]
+
+    if not token:
+        print("push+服务的PUSH_PLUS_TOKEN未设置!!\n取消推送")
+        return
+    print("push+服务启动")
+    data = {
+        "token": token,
+        "title": title,
+        "content": content,
+        "template": json
+    }
+    response = requests.post(f"http://pushplus.hxtrip.com/send/", data=data)
+    print(response.text)
+
+# def push_plus_token(title, content):
+ #   print("\n")
+  #  token = PUSH_PLUS_TOKEN
+  #  if "PUSH_PLUS_TOKEN" in os.environ:
+  #      token = os.environ["PUSH_PLUS_TOKEN"]
+  #  if not token:
+  #      print("PUSH+服务的token未设置!!\n取消推送")
+  #      return
+   # print("PUSH+服务启动")
+   # response = requests.get(
+   #     f"""http://pushplus.hxtrip.com/send?token={token}&title={title}&content={content}""")
+   # print(response.text)
+
 
 def bark(title, content):
     print("\n")
@@ -1022,19 +1060,19 @@ def bark(title, content):
 
 def telegram_bot(title, content):
     print("\n")
-    push_plus_token = PUSH_PLUS_TOKEN
-    push_plus_user = PUSH_PLUS_USER
-    if "PUSH_PLUS_TOKEN" in os.environ and "PUSH_PLUS_USER" in os.environ:
-        push_plus_token = os.environ["PUSH_PLUS_TOKEN"]
-        push_plus_user = os.environ["PUSH_PLUS_USER"]
-    if not push_plus_token or not push_plus_user:
-        print("push推送的push_plus_token或者push_plus_user未设置!!\n取消推送")
+    tg_bot_token = TG_BOT_TOKEN
+    tg_user_id = TG_USER_ID
+    if "TG_BOT_TOKEN" in os.environ and "TG_USER_ID" in os.environ:
+        tg_bot_token = os.environ["TG_BOT_TOKEN"]
+        tg_user_id = os.environ["TG_USER_ID"]
+    if not tg_bot_token or not tg_user_id:
+        print("Telegram推送的tg_bot_token或者tg_user_id未设置!!\n取消推送")
         return
-    print("push 推送开始")
-    send_data = {"chat_id": push_plus_user, "text": title +
+    print("Telegram 推送开始")
+    send_data = {"chat_id": tg_user_id, "text": title +
                  '\n\n'+content, "disable_web_page_preview": "true"}
     response = requests.post(
-        url='http://pushplus.hxtrip.com/send' % (push_plus_token), data=send_data)
+        url='https://api.telegram.org/bot%s/sendMessage' % (tg_bot_token), data=send_data)
     print(response.text)
 
 
@@ -1084,7 +1122,7 @@ def run():
         bark("⏰ 喜马拉雅极速版", message)
         serverJ("⏰ 喜马拉雅极速版", message)
         telegram_bot("⏰ 喜马拉雅极速版", message)
-
+        push_plus_token("⏰ 喜马拉雅极速版", message)
 
 if __name__ == "__main__":
     run()
