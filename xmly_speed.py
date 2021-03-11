@@ -22,7 +22,7 @@ cookiesList = [cookies1,cookies2,cookies3, ]   # 多账号准备
 # 默认不自动提现
 autoTakeOut = True
 # 提现金额
-amount = 20
+amount = 30
 takeOutType = 1
 # 提现账户: 1 -> 支付宝 2 -> 微信
 thirdPayType = 2
@@ -40,7 +40,7 @@ if "AUTO_TAKE_OUT" in os.environ:
 
 # 自定义设备命名,非必须 ;devices=["iPhone7P","huawei"];与cookiesList对应
 devices = []
-notify_time = 21                            # 通知时间,24小时制,默认19
+notify_time = 19                            # 通知时间,24小时制,默认19
 XMLY_ACCUMULATE_TIME = 1                    # 希望刷时长的,此处置1,默认打开;关闭置0
 UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 iting/1.0.12 kdtunion_iting/1.0 iting(main)/1.0.12/ios_1"
 # 非iOS设备的需要的自行修改,自己抓包 与cookie形式类似
