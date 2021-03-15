@@ -27,7 +27,7 @@ TG_PROXY_IP = ''                                                          # tg�
 TG_PROXY_PORT = ''                                                        # tg机器人的TG_PROXY_PORT; secrets可填
 DD_BOT_ACCESS_TOKEN = ''                                                  # 钉钉机器人的DD_BOT_ACCESS_TOKEN; secrets可填
 DD_BOT_SECRET = ''                                                        # 钉钉机器人的DD_BOT_SECRET; secrets可填
-QYWX_APP = 'ww0339ca02f30149f9,y5CQt6k1AygzdKVAguNFoT3XZf0Ar9Cv7WLtP65vixk,@all,1000003,2Bn_LbSLWHANxo91AT3EwFh-bhW1KVSL1YRHuUX-x9HMsTtD-J3TJv5P535tOICd0'                                                             # 企业微信应用的QYWX_APP; secrets可填 参考http://note.youdao.com/s/HMiudGkb
+QYWX_APP = 'ww0339ca02f30149f9,y5CQt6k1AygzdKVAguNFoT3XZf0Ar9Cv7WLtP65vixk,@all,1000003'    # 企业微信应用的QYWX_APP; secrets可填 参考http://note.youdao.com/s/HMiudGkb
 
 notify_mode = []
 
