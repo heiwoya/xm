@@ -20,7 +20,7 @@ cookies3 = "1&_device=iPhone&218E7EEE-4C49-44CF-9F11-EB08C4E7A043&2.1.3; 1&_toke
 cookiesList = [cookies1,cookies2,cookies3, ]   # 多账号准备
 
 # 默认不自动提现
-autoTakeOut = True
+autoTakeOut = False
 # 提现金额
 amount = 20
 takeOutType = 1
