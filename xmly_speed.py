@@ -529,7 +529,7 @@ def ad_score(cookies, businessType, taskId):
         return
     print(response.text)
     print("\n")
-
+/*
 def bubble(cookies):
     print("\n【bubble】")
     headers = {
@@ -619,7 +619,7 @@ def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
         print("网络请求异常,为避免GitHub action报错,直接跳过")
         return
     print(response.text)
-
+*/
 def cardReportTime(cookies, mins, date_stamp, _datatime):
     print("\n【收听获得抽卡机会】")
     headers = {
