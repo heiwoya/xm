@@ -10,14 +10,22 @@ import re
 from util import send, requests_session
 
 # 参考 https://github.com/Zero-S1/xmly_speed/blob/master/xmly_speed.py
+# w
+cookies1 = "1&_device=iPhone&A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9&2.1.8; 1&_token=291505997&5BD3CA50340C34A1C126CD8CE5123636AFEEB5636C2BA3CD19EAB55B98A3CDEAFE1C123A5279174MF867E8F3AAC87ED_; NSUP=42F138CB%2C41E05646%2C1616236904448; XUM=A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9; _xmLog=xm_kmhnsho9mmkfn1; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone X; idfa=218E7EEE-4C49-44CF-9F11-EB08C4E7A043; impl=com.ximalaya.tingLite; ip=2409:812a:3c12:8de:cc:340:100:0; net-mode=4G; res=1125%2C2436"
+# c
+cookies2 = "1&_device=iPhone&A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9&2.0.12; 1&_token=291525045&8EE087B0240C976097E0A263F1AD8E1B05F8E818D862909B4C5B82D59942E21D20E7AEA2E8B674MF867E8F5B02AAA2_; NSUP=42F14DE4%2C41E05AD3%2C1612527435776; XUM=A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=YAL-AL10; idfa=875ba09fbf96719efb36b7c3a3422effod; impl=com.ximalaya.tingLite; ip=192.168.2.153; net-mode=WIFI; res=1080%2C2110; _xmLog=h5&f74bacc1-63b0-4a22-9a44-dca435869537&2.2.5"
+# m
+cookies3 = "1&_device=iPhone&600C01CC-87AF-4CE0-A1F1-07A98D486590&2.1.8; 1&_token=287199517&E5CF1FB0340CA8E1BBD7A088815E446A2DD66E0A5EBC5ADAA2A43DCF988976A8727893442BAC62M0CF1799D92FC8F6_; NSUP=42F138C3%2C41E05670%2C1616241229824; XUM=600C01CC-87AF-4CE0-A1F1-07A98D486590; _xmLog=xm_kmhob4ny17pxvi; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone 6s Plus; idfa=A94D0C4D-9089-4C97-8756-951C1A07027A; impl=com.ximalaya.tingLite; ip=10.154.235.19; net-mode=WIFI; res=1125%2C2001"
+# b
+cookies4 = "1&_device=iPad&346CA73C-E7B2-4C34-B464-E8A9277EA15C&2.1.9; 1&_token=307986856&FBF425A0340CAA3DF1EFBDE764663F96EEF750F7CC690F074753D6475019DD02050D41CA654279M6C2489542C2003E_; NSUP=42F138CC%2C41E0565A%2C1616237035520; XUM=346CA73C-E7B2-4C34-B464-E8A9277EA15C; _xmLog=h5&a1f838c9-db17-4bad-8a27-084506ceacdb&2.2.5; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPad Air 3; idfa=D843E9D2-CFB3-40AC-B957-919A92E513A7; impl=com.ximalaya.tingLite; ip=192.168.2.246; net-mode=WIFI; res=750%2C1334"
+# 文艺
+cookies5 = "1&_device=iPad&346CA73C-E7B2-4C34-B464-E8A9277EA15C&2.1.9; 1&_token=308024631&18E3C840140C2B846209934FCB5F019B0C551FCD2AA0B6A8B061918AF9768B0D16DF43FCAED296M6C248959C5EA82D_; NSUP=42F138CC%2C41E0565A%2C1616237035520; XUM=346CA73C-E7B2-4C34-B464-E8A9277EA15C; _xmLog=xm_kmhn6m5setxr5e; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPad 7; idfa=01DB6EA2-3AF7-408E-8B65-A9BCA5F58A88; impl=com.ximalaya.tingLite; ip=192.168.0.3; net-mode=WIFI; res=750%2C1334"
+# 大头
+cookies6 = "1&_device=iPhone&A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9&2.1.8; 1&_token=296600269&9BDBBEB0340CFD25CDBB757134C89CB3575C2A5C167E27B2D6B198B58B7BAE8A400532DB8D35130MF867E8F73B62418_; NSUP=42F138CB%2C41E05646%2C1616236904448; XUM=A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9; _xmLog=xm_kmhnmc6g83eexd; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone 6s; idfa=D58B8D23-5B9D-4923-9B7C-DD491BB0696B; impl=com.ximalaya.tingLite; ip=fd70:c926:7791:0:a8:844a:100:0; net-mode=WIFI; res=750%2C1334"
+# 测试
+cookies7 = "1&_device=iPad&346CA73C-E7B2-4C34-B464-E8A9277EA15C&2.1.9; 1&_token=308024631&18E3C840140C2B846209934FCB5F019B0C551FCD2AA0B6A8B061918AF9768B0D16DF43FCAED296M6C248959C5EA82D_; NSUP=42F138CC%2C41E0565A%2C1616237035520; XUM=346CA73C-E7B2-4C34-B464-E8A9277EA15C; _xmLog=xm_kmhn6m5setxr5e; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPad 7; idfa=01DB6EA2-3AF7-408E-8B65-A9BCA5F58A88; impl=com.ximalaya.tingLite; ip=192.168.0.3; net-mode=WIFI; res=750%2C1334"
 
-cookies1 = "1&_device=iPhone&218E7EEE-4C49-44CF-9F11-EB08C4E7A043&2.0.12; 1&_token=291505997&FAD4EB60240CE3D0A3B23A4018DF648E644E47A910368BEBE170BF6A8CCE7A28425F26BF312E30M8E9FB8465CE1B52_; NSUP=42F138C1%2C41E0567F%2C1612529270784; XD=LNTXjlqY6O0o5yIcTT5TeyPejuMLHkrZSAPLQudSUwenZBzJZRgcx+I2JpmMjg7RO89W6Ay56jfyr/FQRNJSvw==; XUM=218E7EEE-4C49-44CF-9F11-EB08C4E7A043; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone X; idfa=218E7EEE-4C49-44CF-9F11-EB08C4E7A043; impl=com.ximalaya.tingLite; ip=10.166.84.130; net-mode=WIFI; res=1125%2C2436; _xmLog=h5&166ec035-160a-45a8-b7e5-aa19f6e7e3f9&2.2.5"
-
-cookies2 = "1&_device=iPhone&A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9&2.0.12; 1&_token=296600269&06DBB380340CD3FA141C30AC5FB19D971AAFABC6BA0167A664BE4D35CC8670CD50E16626D2DF74MF867E8F3A5BF22E_; NSUP=42F138D2%2C41E05668%2C1615981182976; XD=/qcSsbJiCsuC21//TDTAnJLkARJ1cA6/L6LKlwx3INBmC+tZhHQpYeElNuyhBwLEw5UFEX/e5KSbCV7d2/AJow==; XUM=A1F80F58-16C6-4A14-B72E-1EB8E8C8B4F9; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone 6s; idfa=D58B8D23-5B9D-4923-9B7C-DD491BB0696B; impl=com.ximalaya.tingLite; ip=fd70:c926:7791:0:c2:840a:100:0; net-mode=WIFI; res=750%2C1334; _xmLog=h5&e1150662-c9a3-4338-ac50-8fb0e2f4d0dd&2.2.5"
-
-cookies3 = "1&_device=iPhone&218E7EEE-4C49-44CF-9F11-EB08C4E7A043&2.1.3; 1&_token=287199517&5AB91360340C89C4F0466513254DF9C9AB34687F296C01A5C4FC90BE95D648AD3E6725E9D2BA139M8E9FB84D9CB9EEB_; NSUP=42F138CA%2C41E0568F%2C1612861931520; XD=LNTXjlqY6O0o5yIcTT5TeyPejuMLHkrZSAPLQudSUwenZBzJZRgcx+I2JpmMjg7RdYeJSotl+LmkVlD4CStRPQ==; XUM=218E7EEE-4C49-44CF-9F11-EB08C4E7A043; ainr=0; c-oper=%E6%9C%AA%E7%9F%A5; channel=ios-b1; device_model=iPhone X; idfa=218E7EEE-4C49-44CF-9F11-EB08C4E7A043; impl=com.ximalaya.tingLite; ip=10.102.179.111; net-mode=WIFI; res=1125%2C2436; _xmLog=h5&77f21a9d-77df-4093-a01b-857b9fafc5f0&2.2.5"
-
-cookiesList = [cookies1,cookies2,cookies3, ]   # 多账号准备
+cookiesList = [cookies4,cookies6, ]   # 多账号准备
 
 # 默认不自动提现
 autoTakeOut = False
@@ -25,7 +33,7 @@ autoTakeOut = False
 amount = 20
 takeOutType = 1
 # 提现账户: 1 -> 支付宝 2 -> 微信
-thirdPayType = 2
+thirdPayType = 1
 
 # ac读取环境变量
 if "XMLY_SPEED_COOKIE" in os.environ:
@@ -530,7 +538,95 @@ def ad_score(cookies, businessType, taskId):
     print(response.text)
     print("\n")
 
+def bubble(cookies):
+    print("\n【bubble】")
+    headers = {
+        'User-Agent': UserAgent,
+        'Content-Type': 'application/json;charset=utf-8',
+        'Host': 'm.ximalaya.com',
+        'Origin': 'https://m.ximalaya.com',
+        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-open-components/bubble',
+    }
+    uid = get_uid(cookies)
+    data = {"listenTime": "41246", "signature": "2b1cc9e8831cff8874d9c",
+            "currentTimeMillis": "1596695606145", "uid": uid, "expire": False}
+    try:
+        response = requests_session().post('https://m.ximalaya.com/speed/web-earn/listen/bubbles',
+                                           headers=headers, cookies=cookies, data=json.dumps(data))
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
+        return
+    result = response.json()
+    # print(result)
 
+    if not result["data"]["effectiveBubbles"]:
+        print("暂无有效气泡")
+        return
+    for i in result["data"]["effectiveBubbles"]:
+        print(i["id"])
+
+        tmp = receive(cookies, i["id"])
+        if tmp and "errorCode" in tmp:
+            print("❌ 每天手动收听一段时间，暂无其他方法")
+            return
+        time.sleep(1)
+        ad_score(cookies, 7, i["id"])
+    for i in result["data"]["expiredBubbles"]:
+        ad_score(cookies, 6, i["id"])
+
+def receive(cookies, taskId):
+    headers = {
+        'Host': 'm.ximalaya.com',
+        'Accept': 'application/json, text/plain, */*',
+        'Connection': 'keep-alive',
+        'User-Agent': UserAgent,
+        'Accept-Language': 'zh-cn',
+        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-open-components/bubble',
+        'Accept-Encoding': 'gzip, deflate, br',
+    }
+    try:
+        response = requests_session().get(
+            f'https://m.ximalaya.com/speed/web-earn/listen/receive/{taskId}', headers=headers, cookies=cookies)
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
+        return
+    print("receive: ", response.text)
+    return response.json()
+
+def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
+    print("\n 【领取万能卡】")
+    headers = {
+        'User-Agent': UserAgent,
+        'Content-Type': 'application/json;charset=utf-8',
+        'Host': 'm.ximalaya.com',
+        'Origin': 'https://m.ximalaya.com',
+        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-activities/card-collection/home',
+    }
+    try:
+        count = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/omnipotentCardInfo',
+                                       headers=headers, cookies=cookies,).json()["data"]["count"]
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
+        return
+    if count == 5:
+        print("今日已满")
+        return
+
+    token = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/token/1',
+                                   headers=headers, cookies=cookies,).json()["data"]["id"]
+    uid = get_uid(cookies)
+    data = {
+        "listenTime": mins-date_stamp,
+        "signData": rsa_encrypt(f"{_datatime}{token}{uid}", pubkey_str),
+        "token": token
+    }
+    try:
+        response = requests_session().post('https://m.ximalaya.com/speed/web-earn/card/getOmnipotentCard',
+                                           headers=headers, cookies=cookies, data=json.dumps(data))
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
+        return
+    print(response.text)
 
 def cardReportTime(cookies, mins, date_stamp, _datatime):
     print("\n【收听获得抽卡机会】")
@@ -982,7 +1078,7 @@ def run():
         print("###"*20)
         print("\n"*4)
 
-    if int(_notify_time.split()[0]) == notify_time and int(_notify_time.split()[1]) < 5:
+    if int(_notify_time.split()[0]) == notify_time and int(_notify_time.split()[1]) < 32:
     # if 1:
         message = ''
         for i in table:
