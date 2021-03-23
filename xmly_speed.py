@@ -529,97 +529,9 @@ def ad_score(cookies, businessType, taskId):
         return
     print(response.text)
     print("\n")
-/*
-def bubble(cookies):
-    print("\n【bubble】")
-    headers = {
-        'User-Agent': UserAgent,
-        'Content-Type': 'application/json;charset=utf-8',
-        'Host': 'm.ximalaya.com',
-        'Origin': 'https://m.ximalaya.com',
-        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-open-components/bubble',
-    }
-    uid = get_uid(cookies)
-    data = {"listenTime": "41246", "signature": "2b1cc9e8831cff8874d9c",
-            "currentTimeMillis": "1596695606145", "uid": uid, "expire": False}
-    try:
-        response = requests_session().post('https://m.ximalaya.com/speed/web-earn/listen/bubbles',
-                                           headers=headers, cookies=cookies, data=json.dumps(data))
-    except:
-        print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return
-    result = response.json()
-    # print(result)
 
-    if not result["data"]["effectiveBubbles"]:
-        print("暂无有效气泡")
-        return
-    for i in result["data"]["effectiveBubbles"]:
-        print(i["id"])
 
-        tmp = receive(cookies, i["id"])
-        if tmp and "errorCode" in tmp:
-            print("❌ 每天手动收听一段时间，暂无其他方法")
-            return
-        time.sleep(1)
-        ad_score(cookies, 7, i["id"])
-    for i in result["data"]["expiredBubbles"]:
-        ad_score(cookies, 6, i["id"])
 
-def receive(cookies, taskId):
-    headers = {
-        'Host': 'm.ximalaya.com',
-        'Accept': 'application/json, text/plain, */*',
-        'Connection': 'keep-alive',
-        'User-Agent': UserAgent,
-        'Accept-Language': 'zh-cn',
-        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-open-components/bubble',
-        'Accept-Encoding': 'gzip, deflate, br',
-    }
-    try:
-        response = requests_session().get(
-            f'https://m.ximalaya.com/speed/web-earn/listen/receive/{taskId}', headers=headers, cookies=cookies)
-    except:
-        print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return
-    print("receive: ", response.text)
-    return response.json()
-
-def getOmnipotentCard(cookies, mins, date_stamp, _datatime):
-    print("\n 【领取万能卡】")
-    headers = {
-        'User-Agent': UserAgent,
-        'Content-Type': 'application/json;charset=utf-8',
-        'Host': 'm.ximalaya.com',
-        'Origin': 'https://m.ximalaya.com',
-        'Referer': 'https://m.ximalaya.com/xmds-node-spa/apps/speed-growth-activities/card-collection/home',
-    }
-    try:
-        count = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/omnipotentCardInfo',
-                                       headers=headers, cookies=cookies,).json()["data"]["count"]
-    except:
-        print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return
-    if count == 5:
-        print("今日已满")
-        return
-
-    token = requests_session().get('https://m.ximalaya.com/speed/web-earn/card/token/1',
-                                   headers=headers, cookies=cookies,).json()["data"]["id"]
-    uid = get_uid(cookies)
-    data = {
-        "listenTime": mins-date_stamp,
-        "signData": rsa_encrypt(f"{_datatime}{token}{uid}", pubkey_str),
-        "token": token
-    }
-    try:
-        response = requests_session().post('https://m.ximalaya.com/speed/web-earn/card/getOmnipotentCard',
-                                           headers=headers, cookies=cookies, data=json.dumps(data))
-    except:
-        print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return
-    print(response.text)
-*/
 def cardReportTime(cookies, mins, date_stamp, _datatime):
     print("\n【收听获得抽卡机会】")
     headers = {
